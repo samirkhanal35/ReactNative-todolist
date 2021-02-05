@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,31 +14,59 @@ import {
   View,
   Text,
   StatusBar,
+  FlatList,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+// import {
+//   Header,
+//   LearnMoreLinks,
+//   Colors,
+//   DebugInstructions,
+//   ReloadInstructions,
+// } from 'react-native/Libraries/NewAppScreen';
 
-const App: () => React$Node = () => {
+import Header from './components/header';
+import TodoItem from './components/todoitem';
+export default function App() {
+  const [todos, setTodos] = useState([
+    {text: 'buy coffee', key: '1'},
+    {text: 'create an app', key: '2'},
+    {text: 'play on the switch', key: '3'},
+  ]);
+
+  const pressHandler = (key) => {
+    setTodos((prevTodos) => {
+      return prevTodos.filter((todo) => todo.key != key);
+    });
+  };
   return (
-    <View style={styles.textstye}>
-      <Text>Demo App</Text>
+    <View style={styles.container}>
+      {/* header */}
+      <Header />
+      <View style={styles.content}>
+        {/* todo form */}
+        <View style={styles.list}>
+          <FlatList
+            data={todos}
+            renderItem={({item}) => (
+              <TodoItem item={item} pressHandler={pressHandler} />
+            )}
+          />
+        </View>
+      </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  textstye: {
-    display: 'flex',
+  container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  content: {
+    padding: 40,
+  },
+  list: {
+    marginTop: 20,
   },
 });
-
-export default App;
