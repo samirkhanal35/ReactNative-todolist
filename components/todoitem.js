@@ -9,11 +9,15 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const TodoItem = ({item, pressHandler}) => {
   return (
     <TouchableOpacity onPress={() => pressHandler(item.key)}>
-      <Text style={styles.item}>{item.text} </Text>
+      <View style={styles.item}>
+        <MaterialCommunityIcons name="delete" size={18} color="black" />
+        <Text style={styles.itemText}>{item.text} </Text>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -25,6 +29,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'dashed',
     borderRadius: 10,
+    flexDirection: 'row',
+    // justifyContent: '',
+  },
+  itemText: {
+    marginLeft: 10,
   },
 });
 
